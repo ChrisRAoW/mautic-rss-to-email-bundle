@@ -21,7 +21,7 @@ Currently only installation with composer is supported. This since it is dependi
 1. Login into the terminal (ssh) and cd to the root directory of your mautic installation
 2. Install plugin with composer
 ```
-composer require raow/mautic-rss-to-email-bundle:"dev-master"
+composer require raow/mautic-rss-to-email-bundle
 ```
 
 3. In the Mautic GUI, go to the gear and then to Plugins.
