@@ -16,10 +16,14 @@ This plugin has been tested with v2.12.0 of Mautic.
  * Format dates
 
 ## [Installation](id:installation)
-Currently only installation with composer is supported. This since it is using a third-party library to parse the feed.
+Currently only installation with composer is supported. This since it is depending on a third-party library to parse the feed.
 
 1. Login into the terminal (ssh) and cd to the root directory of your mautic installation
-2. Run: composer install <<git url>>
+2. Install plugin with composer
+```
+composer require raow/mautic-rss-to-email-bundle:"dev-master"
+```
+
 3. In the Mautic GUI, go to the gear and then to Plugins.
 4. Click on the "Install/Upgrade Plugins" button
 5. You should now see the "Rss To Email" in your list of plugins.
