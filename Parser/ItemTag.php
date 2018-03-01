@@ -28,6 +28,9 @@ class ItemTag
             case 'title':
                 $value = $feedItem->get_title();
                 break;
+            case 'link':
+                $value = $feedItem->get_link();
+                break;
             case 'content':
                 $value = $feedItem->get_description();
                 break;
