@@ -61,6 +61,9 @@ Returns: description of the feed
 #### {feeditem:title}
 Returns: title of the post
 
+#### {feeditem:link}
+Returns: link to the post
+
 #### {feeditem:content}
 Returns: summarized content (desciption), when description is not available it will return the full content
 
