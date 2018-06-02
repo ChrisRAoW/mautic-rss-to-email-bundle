@@ -7,13 +7,16 @@ The Mautic RssToEmailBundle is a Mautic plugin that allows you to generate e-mai
 Send out an e-mail with for example to latest posts of your blog.
 
 ### Compatibility
-This plugin has been tested with v2.12.0 of Mautic.
+This plugin has been tested with v2.13.1 of Mautic.
 
 ### Features
  * Set the number of posts you want to display
  * Create a custom template for the items in the feed
  * Use images from the feed
  * Format dates
+
+## [IMPORTANT: Please check before install](id:pre-installation)
+The method that is used to install this plugin requires Mautic's composer.json in the root of the Mautic installation. If you installed Mautic from Github (https://github.com/mautic/mautic), you should be fine. If you installed Mautic from a zip downloaded from the Mautic website, please check if the composer.json exists. If not, download the composer.json from Mautic's Github and upload it before installing the plugin.
 
 ## [Installation](id:installation)
 Currently only installation with composer is supported. This since it is depending on a third-party library to parse the feed.
