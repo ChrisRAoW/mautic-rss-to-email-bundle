@@ -65,7 +65,15 @@ class ItemTag
                 $value = $feedItem->get_author()->get_name();
                 break;
             case 'categories':
-                $value = implode(', ', $feedItem->get_categories());
+                $categories = $feedItem->get_categories();
+                $categoriesList = [];
+
+                if (!empty($categories)) foreach ($categories as $category)
+                {
+                    $categoriesList[] = $category->get_label();
+                }
+
+                $value = implode(', ', $categoriesList);
                 break;
             case 'image':
                 $enclosure = $feedItem->get_enclosure();
