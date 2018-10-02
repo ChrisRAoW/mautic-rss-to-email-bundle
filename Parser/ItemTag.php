@@ -83,6 +83,12 @@ class ItemTag
                     $value = $enclosure->get_link();
                 }
                 break;
+            default:
+                $custTag = $feedItem->get_item_tags('',$this->tag);
+                if(!empty($custTag)) {
+                    $value = $custTag[0]['data'];
+                }
+                break;
         }
 
         return $value;
