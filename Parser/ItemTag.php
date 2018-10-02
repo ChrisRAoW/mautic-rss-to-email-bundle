@@ -84,9 +84,10 @@ class ItemTag
                 }
                 break;
             default:
-                $custTag = $feedItem->get_item_tags('',$this->tag);
-                if(!empty($custTag)) {
-                    $value = $custTag[0]['data'];
+                $itemTag = $feedItem->get_item_tags('', $this->tag);
+                
+                if(!empty($itemTag)) {
+                    $value = $itemTag[0]['data'];
                 }
                 break;
         }
