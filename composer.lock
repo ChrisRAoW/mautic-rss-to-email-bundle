@@ -4,64 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9ec3af15aff1f542a6fbb6ac597b7dc5",
+    "content-hash": "e04a5b836f98c1077a999553477d4367",
     "packages": [
         {
-            "name": "mautic/composer-plugin",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mautic/composer-plugin.git",
-                "reference": "27d2474ae8e39d30d28908d6f818e71fe32b8443"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mautic/composer-plugin/zipball/27d2474ae8e39d30d28908d6f818e71fe32b8443",
-                "reference": "27d2474ae8e39d30d28908d6f818e71fe32b8443",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.5"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Mautic\\Composer\\InstallerPlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mautic\\Composer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "time": "2017-12-10T22:16:22+00:00"
-        },
-        {
             "name": "simplepie/simplepie",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e"
+                "reference": "0e8fe72132dad765d25db4cabc69a91139af1263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e",
-                "reference": "db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/0e8fe72132dad765d25db4cabc69a91139af1263",
+                "reference": "0e8fe72132dad765d25db4cabc69a91139af1263",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "ext-pcre": "*",
+                "ext-xml": "*",
+                "ext-xmlreader": "*",
+                "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4 || ~5"
+                "phpunit/phpunit": "~5.4.3 || ~6.5"
             },
             "suggest": {
+                "ext-curl": "",
+                "ext-iconv": "",
+                "ext-intl": "",
+                "ext-mbstring": "",
                 "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
             },
             "type": "library",
@@ -99,7 +71,7 @@
                 "feeds",
                 "rss"
             ],
-            "time": "2017-11-12T02:03:34+00:00"
+            "time": "2018-08-02T05:43:58+00:00"
         }
     ],
     "packages-dev": [],

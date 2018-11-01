@@ -8,7 +8,6 @@
         }
     ],
     "require": {
-        "mautic/composer-plugin": "^1.0",
         "simplepie/simplepie": "^1.5"
     }
 }

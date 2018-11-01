@@ -16,3 +16,5 @@ use Mautic\PluginBundle\Bundle\PluginBundleBase;
 class MauticRssToEmailBundle extends PluginBundleBase
 {
 }
+
+include(dirname(__FILE__) . '/vendor/autoload.php');
