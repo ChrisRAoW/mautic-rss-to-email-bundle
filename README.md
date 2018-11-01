@@ -18,7 +18,7 @@ This plugin has been tested with v2.14.2 of Mautic.
 ## [Installation](id:installation)
 
 1. Download the plugin from github
-2. Move / Upload folder to the plugins directory
+2. Move / Upload folder to the plugins directory. Name the folder `MauticRssToEmailBundle`
 3. In the Mautic GUI, go to the gear and then to Plugins.
 4. Click on the "Install/Upgrade Plugins" button
 5. You should now see the "Rss To Email" in your list of plugins.
