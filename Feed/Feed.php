@@ -10,6 +10,7 @@ class Feed
     public function __construct($url)
     {
         $feed = new SimplePie();
+        $feed->set_useragent('mautic');
         $feed->set_feed_url($url);
         $feed->enable_cache(false);
         $feed->init();
