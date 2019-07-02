@@ -3,6 +3,7 @@ namespace MauticPlugin\MauticRssToEmailBundle\Parser;
 
 use MauticPlugin\MauticRssToEmailBundle\Feed\Feed;
 use MauticPlugin\MauticRssToEmailBundle\Traits\ParamsTrait;
+use Mautic\LeadBundle\Helper\TokenHelper;
 
 class Parser
 {
@@ -19,8 +20,7 @@ class Parser
                 $this->parseParams($matches[1][$key]);
 
                 $feedContent = $matches[2][$key];
-                $feedUrl     = str_replace(array_keys($event->getTokens()), $event->getTokens(), $this->getParam('url'));
-
+                $feedUrl = TokenHelper::findLeadTokens($this->getParam('url'), $event->getLead(), true);
                 if (!$this->validateFeedUrl($feedUrl)) {
                     $content = str_replace($feedWrapper, "Error: URL ({$feedUrl}) empty or not valid", $content);
                     continue;
