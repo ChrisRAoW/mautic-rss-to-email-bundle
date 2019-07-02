@@ -10,23 +10,23 @@ class Parser
 
     protected $content = null;
 
-    public function __construct($content)
+    public function __construct($content, $event)
     {
-        preg_match_all('/{feed([^}]*)}(.*){\/feed}/msU', $content, $matches);
+        preg_match_all('/{feed((?:[^{}]|{[^}]*})*)}(.*){\/feed}/msU', $content, $matches);
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $key => $feedWrapper) {
                 $this->parseParams($matches[1][$key]);
 
                 $feedContent = $matches[2][$key];
-                $feedUrl     = $this->getParam('url');
+                $feedUrl     = str_replace(array_keys($event->getTokens()), $event->getTokens(), $this->getParam('url'));
 
                 if (!$this->validateFeedUrl($feedUrl)) {
                     $content = str_replace($feedWrapper, "Error: URL ({$feedUrl}) empty or not valid", $content);
                     continue;
                 }
 
-                $feed = new Feed($this->getParam('url'));
+                $feed = new Feed($feedUrl);
 
                 if (is_null($feed->getFeed()->error())) {
                     $feedParser        = new FeedParser($feedContent, $feed);
