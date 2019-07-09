@@ -32,15 +32,14 @@ class EmailSubscriber extends CommonSubscriber
     {
         // // Get content
         $content = $event->getContent();
-
-        $parser  = new Parser($content);
+        $parser  = new Parser($content, $event);
         $content = $parser->getContent();
 
         $event->setContent($content);
 
         // Also replace feed items in the subject
         $content = $event->getSubject();
-        $parser  = new Parser($content);
+        $parser  = new Parser($content, $event);
         $content = $parser->getContent();
         $event->setSubject($content);
     }
