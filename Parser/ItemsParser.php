@@ -25,7 +25,7 @@ class ItemsParser
 
             $item_i = 0;
             $items = $feed->getFeed()->get_items();
-            if ($reverse) {
+            if ($reverse == 1) {
                 $items = array_reverse($items);
             }
 
