@@ -14,6 +14,7 @@ This plugin has been tested with v2.14.2 of Mautic.
  * Create a custom template for the items in the feed
  * Use images from the feed
  * Format dates
+ * Reverse view
 
 ## [Installation](id:installation)
 
@@ -52,6 +53,9 @@ Returns: description of the feed
 
 
 ### The following tags can be used in the {feeditems} block:
+
+Optional param: 
+- reverse {feeditems count="3" reverse="1"} - returns posts in reversed view
 
 #### {feeditem:title}
 Returns: title of the post
