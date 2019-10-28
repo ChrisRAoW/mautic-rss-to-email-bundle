@@ -21,9 +21,15 @@ class ItemsParser
             $itemsContent = '';
 
             $maxImages = $this->getParam('count');
+            $reverse = $this->getParam('reverse');
 
             $item_i = 0;
-            foreach ($feed->getFeed()->get_items() as $feedItem) {
+            $items = $feed->getFeed()->get_items();
+            if ($reverse == 1) {
+                $items = array_reverse($items);
+            }
+
+            foreach ($items as $feedItem) {
                 if (!empty($maxImages) && $maxImages == $item_i) break;
 
                 $itemsContent .= $this->parseItem($itemTemplate, $feedItem);
