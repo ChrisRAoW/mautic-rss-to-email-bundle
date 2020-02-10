@@ -56,7 +56,6 @@ class ItemTag
                 break;
             case 'author':
                 $author = $feedItem->get_author();
-                $value  = '';
 
                 if (!is_null($author)) {
                     $value = $author->get_link();

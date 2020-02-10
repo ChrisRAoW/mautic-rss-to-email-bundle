@@ -9,7 +9,7 @@ class Parser
 {
     use ParamsTrait;
 
-    protected $content = null;
+    protected $content;
 
     public function __construct($content, $event)
     {
