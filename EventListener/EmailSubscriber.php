@@ -2,7 +2,6 @@
 namespace MauticPlugin\MauticRssToEmailBundle\EventListener;
 
 use MauticPlugin\MauticRssToEmailBundle\Parser\Parser;
-use Mautic\CoreBundle\EventListener\CommonSubscriber;
 use Mautic\EmailBundle\EmailEvents;
 use Mautic\EmailBundle\Event\EmailSendEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
