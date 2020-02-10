@@ -46,12 +46,7 @@ class Parser
     public function validateFeedUrl($url)
     {
         $url = trim($url);
-
-        if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
-            return false;
-        }
-
-        return true;
+        return !empty($url) && filter_var($url, FILTER_VALIDATE_URL);
     }
 
     public function setContent($content)
