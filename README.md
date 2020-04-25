@@ -90,3 +90,7 @@ Returns: comma seperated list of the categories
 
 #### {feeditem:image}
 Returns: url of the image. Will check the enclosere and media tags of the xml.
+
+### Icon
+
+<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
