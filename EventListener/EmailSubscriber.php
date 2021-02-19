@@ -2,14 +2,14 @@
 namespace MauticPlugin\MauticRssToEmailBundle\EventListener;
 
 use MauticPlugin\MauticRssToEmailBundle\Parser\Parser;
-use Mautic\CoreBundle\EventListener\CommonSubscriber;
+use Mautic\CoreBundle\EventListener\CommonStatsSubscriber;
 use Mautic\EmailBundle\EmailEvents;
 use Mautic\EmailBundle\Event\EmailSendEvent;
 
 /**
  * Class EmailSubscriber
  */
-class EmailSubscriber extends CommonSubscriber
+class EmailSubscriber extends CommonStatsSubscriber
 {
 
     /**
