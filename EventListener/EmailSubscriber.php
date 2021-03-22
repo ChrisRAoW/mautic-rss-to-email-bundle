@@ -2,14 +2,14 @@
 namespace MauticPlugin\MauticRssToEmailBundle\EventListener;
 
 use MauticPlugin\MauticRssToEmailBundle\Parser\Parser;
-use Mautic\CoreBundle\EventListener\CommonSubscriber;
 use Mautic\EmailBundle\EmailEvents;
 use Mautic\EmailBundle\Event\EmailSendEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class EmailSubscriber
  */
-class EmailSubscriber extends CommonSubscriber
+class EmailSubscriber implements EventSubscriberInterface
 {
 
     /**
@@ -17,10 +17,10 @@ class EmailSubscriber extends CommonSubscriber
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            EmailEvents::EMAIL_ON_SEND    => array('onEmailGenerate', 300),
-            EmailEvents::EMAIL_ON_DISPLAY => array('onEmailGenerate', 300),
-        );
+        return [
+            EmailEvents::EMAIL_ON_SEND    => ['onEmailGenerate', 300],
+            EmailEvents::EMAIL_ON_DISPLAY => ['onEmailGenerate', 300],
+        ];
     }
 
     /**
