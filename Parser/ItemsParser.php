@@ -22,9 +22,15 @@ class ItemsParser
 
             $maxImages = $this->getParam('count');
             $reverse = $this->getParam('reverse');
-
+            $force   = $this->getParam('force');
             $item_i = 0;
-            $items = $feed->getFeed()->get_items();
+            $feed = $feed->getFeed();
+            if ($force) {
+                $feed->force_feed(true);
+                $feed->enable_order_by_date(false);
+
+            }
+            $items  = $feed->get_items();
             if ($reverse == 1) {
                 $items = array_reverse($items);
             }

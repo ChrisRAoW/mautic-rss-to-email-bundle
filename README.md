@@ -54,8 +54,10 @@ Returns: description of the feed
 
 ### The following tags can be used in the {feeditems} block:
 
-Optional param: 
+Optional params: 
 - reverse {feeditems count="3" reverse="1"} - returns posts in reversed view
+
+- force {feeditems count="3" force="1"} - returns posts in order from rss, not by date
 
 #### {feeditem:title}
 Returns: title of the post
