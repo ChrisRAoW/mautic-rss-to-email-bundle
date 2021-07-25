@@ -7,7 +7,7 @@ The Mautic RssToEmailBundle is a Mautic plugin that allows you to generate e-mai
 Send out an e-mail with for example to latest posts of your blog.
 
 ### Compatibility
-This plugin has been tested with v3.3.2 of Mautic.
+This plugin has been tested with Mautic versions 2.x, 3.x and 4.x.
 
 ### Features
  * Set the number of posts you want to display
