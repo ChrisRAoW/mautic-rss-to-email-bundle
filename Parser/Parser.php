@@ -32,10 +32,15 @@ class Parser
 
                 $feedContent = $matches[2][$key];
 
+                $feedUrl = str_replace('&amp;', '&', $this->getParam('url'));
+
                 // Replace tokens is only for e-mail send via the API. 
                 // The feed is only parsed once a batch. 
                 // So for multiple e-mails it will inconsistent results.
                 $feedUrl = $this->replaceTokens($this->getParam('url'));
+
+                // The editor replaces &-characters by the html-entity &amp;.
+                $feedUrl = str_replace('&amp;', '&', $feedUrl);
 
                 if (!$this->validateFeedUrl($feedUrl)) {
                     $content = str_replace($feedWrapper, "Error: URL ({$feedUrl}) empty or not valid", $content);
