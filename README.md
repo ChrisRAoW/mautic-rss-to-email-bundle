@@ -91,6 +91,37 @@ Returns: comma seperated list of the categories
 #### {feeditem:image}
 Returns: url of the image. Will check the enclosere and media tags of the xml.
 
+#### {feeditem:custom:KEY}
+Returns: value of custom field in RSS feed.
+
+To use this functionality you have to:
+1. Add this to the xmlns definitions in your RSS-feed: `xmlns:mautic="https://www.mautic.org/rss/mautic/"`
+
+For example:
+```
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:mautic="https://www.mautic.org/rss/mautic/">
+
+<channel>
+...
+```
+
+2. Add the custom field to your RSS-feed with the following syntax:
+```
+<mautic:location>New York</mautic:location>
+```
+
+3. Inside your mail template use the following tag:
+```
+{feeditem:custom:location}
+```
+
 ### Icon
 
 <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

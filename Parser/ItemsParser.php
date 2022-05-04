@@ -45,15 +45,19 @@ class ItemsParser
 
     public function parseItem($itemTemplate, $feedItem)
     {
-        preg_match_all('/{feeditem:([^ }]+)( [^}]+)?}/', $itemTemplate, $tags);
+        preg_match_all('/{feeditem:([^ }:]+)(:([^ }:]+))?( [^}]+)?}/', $itemTemplate, $tags);
 
         if (!empty($tags[1])) {
 
             foreach ($tags[1] as $tagIndex => $tag) {
                 $params = [];
 
-                if (isset($tags[2][$tagIndex]) && !empty(trim($tags[2][$tagIndex]))) {
-                    $params = ParamsHelper::parse($tags[2][$tagIndex]);
+                if (!empty(trim($tags[4][$tagIndex]))) {
+                    $params = ParamsHelper::parse($tags[4][$tagIndex]);
+                }
+
+                if (!empty($tags[3][$tagIndex])) {
+                    $params['subTag'] = $tags[3][$tagIndex];
                 }
 
                 $itemTag = new ItemTag($tag, $params, $feedItem);

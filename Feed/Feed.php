@@ -18,8 +18,6 @@ class Feed
         $feed->init();
         $feed->handle_content_type();
 
-        trigger_error('Got feed');
-
         FeedCache::push($url, $feed);
 
         return $feed;

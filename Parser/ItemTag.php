@@ -82,6 +82,20 @@ class ItemTag
                     $value = $enclosure->get_link();
                 }
                 break;
+            case 'custom':
+                $key = null;
+
+                if (!empty($this->getParam('subTag'))) {
+                    $key = $this->getParam('subTag');
+                } elseif (!empty($this->getParam('key'))) {
+                    $key = $this->getParam('key');
+                }
+
+                $itemTag = $feedItem->get_item_tags('https://www.mautic.org/rss/mautic/', $key);
+
+                $value = $itemTag[0]['data'] ?? null;
+
+                break;
             default:
                 $itemTag = $feedItem->get_item_tags('', $this->tag);
                 
