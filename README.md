@@ -25,7 +25,7 @@ This plugin has been tested with Mautic versions 2.x, 3.x and 4.x.
 5. You should now see the "Rss To Email" in your list of plugins.
 
 ## [Usage](id:usage)
-Use the "code mode" slot of the froala e-mail editor. In the content of the slot set to following content:
+Use the "code mode" slot of the froala/grapejs e-mail editor. In the content of the slot set to following content:
 
 ```
 {feed url="<<FEEDURL>>"}
