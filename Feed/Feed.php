@@ -5,10 +5,12 @@ use SimplePie;
 
 class Feed
 {
-    protected $feed;
-
-    public function __construct($url)
+    public static function fetch(string $url)
     {
+        if (FeedCache::exists($url)) {
+            return FeedCache::get($url);
+        }
+
         $feed = new SimplePie();
         $feed->set_useragent('mautic');
         $feed->set_feed_url($url);
@@ -16,12 +18,9 @@ class Feed
         $feed->init();
         $feed->handle_content_type();
 
-        $this->feed = $feed;
-    }
+        FeedCache::push($url, $feed);
 
-    public function getFeed()
-    {
-        return $this->feed;
+        return $feed;
     }
 
 }

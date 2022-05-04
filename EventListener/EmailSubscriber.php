@@ -30,12 +30,21 @@ class EmailSubscriber implements EventSubscriberInterface
      */
     public function onEmailGenerate(EmailSendEvent $event)
     {
-        // // Get content
+        // Get HTML Content, Parse it, Generate New Content
         $content = $event->getContent();
         $parser  = new Parser($content, $event);
         $content = $parser->getContent();
 
+        // Set HTML Content
         $event->setContent($content);
+
+        // Get Plain Text Content, Parse it, Generate New Content
+        $content = $event->getPlainText();
+        $parser  = new Parser($content, $event);
+        $content = $parser->getContent();
+
+        // Set Plain Text Content
+        $event->setPlainText($content);
 
         // Also replace feed items in the subject
         $content = $event->getSubject();

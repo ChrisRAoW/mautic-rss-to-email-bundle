@@ -20,21 +20,33 @@ class ItemsParser
 
             $itemsContent = '';
 
-            $maxImages = $this->getParam('count');
-            $reverse = $this->getParam('reverse');
+            $items = $feed->get_items();
 
-            $item_i = 0;
-            $items = $feed->getFeed()->get_items();
+            $count = $this->getParam('count');
+            $offset = $this->getParam('offset') ?? 0;
+            $reverse = $this->getParam('reverse');
+            $shuffle = $this->getParam('shuffle');
+
             if ($reverse == 1) {
                 $items = array_reverse($items);
             }
 
+            if ($shuffle == 1) {
+                shuffle($items);
+            }
+
+            if (
+                (
+                    is_null($count) ||
+                    is_numeric($count)
+                ) &&
+                is_numeric($offset)
+            ) {
+                $items = array_splice($items, $offset, $count);
+            }
+
             foreach ($items as $feedItem) {
-                if (!empty($maxImages) && $maxImages == $item_i) break;
-
                 $itemsContent .= $this->parseItem($itemTemplate, $feedItem);
-
-                $item_i++;
             }
 
             $content = str_replace($feedItemMatches[0], $itemsContent, $content);
@@ -45,15 +57,19 @@ class ItemsParser
 
     public function parseItem($itemTemplate, $feedItem)
     {
-        preg_match_all('/{feeditem:([^ }]+)( [^}]+)?}/', $itemTemplate, $tags);
+        preg_match_all('/{feeditem:([^ }:]+)(:([^ }:]+))?( [^}]+)?}/', $itemTemplate, $tags);
 
         if (!empty($tags[1])) {
 
             foreach ($tags[1] as $tagIndex => $tag) {
                 $params = [];
 
-                if (isset($tags[2][$tagIndex]) && !empty(trim($tags[2][$tagIndex]))) {
-                    $params = ParamsHelper::parse($tags[2][$tagIndex]);
+                if (!empty(trim($tags[4][$tagIndex]))) {
+                    $params = ParamsHelper::parse($tags[4][$tagIndex]);
+                }
+
+                if (!empty($tags[3][$tagIndex])) {
+                    $params['subTag'] = $tags[3][$tagIndex];
                 }
 
                 $itemTag = new ItemTag($tag, $params, $feedItem);
