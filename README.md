@@ -61,40 +61,40 @@ Reverse `{feeditems count="3" reverse="1"}` - returns posts in reversed view
   Returns: title of the post
 
 * `{feeditem:link}`  
-  Returns: link to the post
+Returns: link to the post
 
 * `{feeditem:content}`  
-  Returns: summarized content (desciption), when description is not available it will return the full content
+Returns: summarized content (desciption), when description is not available it will return the full content
 
 * `{feeditem:content_full}`  
-  Returns: full content of the post
+Returns: full content of the post
 
 * `{feeditem:content_text}`  
-  Returns: summarized content (desciption), when description is not available it will return the full content. Tags are stripped.
+Returns: summarized content (desciption), when description is not available it will return the full content. Tags are stripped.
 
 * `{feeditem:content_full_text}`  
-  Returns: full content of the post stripped of tags
+Returns: full content of the post stripped of tags
 
 * `{feeditem:description}`  
-  Returns: summarized content (desciption) of the post
+Returns: summarized content (desciption) of the post
 
 * `{feeditem:date}`  
-  Optional param: format {feeditem:date format="d-m-Y H:i"}  
-  Returns: summarized content (desciption) of the post
+Optional param: format {feeditem:date format="d-m-Y H:i"}  
+Returns: summarized content (desciption) of the post
 
 * `{feeditem:author}`  
-  Returns: author name of the post
+Returns: author name of the post
 
 * `{feeditem:categories}`  
-  Returns: comma seperated list of the categories
+Returns: comma seperated list of the categories
 
 * `{feeditem:image}`  
-  Returns: url of the image. Will check the enclosere and media tags of the xml.
+Returns: url of the image. Will check the enclosere and media tags of the xml.
 
 * `{feeditem:custom:KEY}`  
-  Returns: value of custom field in RSS feed.  
+Returns: value of custom field in RSS feed.  
 
-  To use this functionality you have to:
+To use this functionality you have to:
   1. Add this to the xmlns definitions in your RSS-feed: `xmlns:mautic="https://www.mautic.org/rss/mautic/"`  
      
      For example:
