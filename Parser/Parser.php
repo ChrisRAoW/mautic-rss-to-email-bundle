@@ -47,13 +47,13 @@ class Parser
                     continue;
                 }
 
-                $feed = new Feed($feedUrl);
+                $feed = Feed::fetch($feedUrl);
 
-                if (is_null($feed->getFeed()->error())) {
+                if (is_null($feed->error())) {
                     $feedParser        = new FeedParser($feedContent, $feed);
                     $feedParserContent = $feedParser->getContent();
                 } else {
-                    $feedParserContent = "Error: {$feed->getFeed()->error()}";
+                    $feedParserContent = "Error: {$feed->error()}";
                 }
 
                 // $this->getEvent()->addToken($feedWrapper, $parser->parse()); // Use later to do feed parsing on contact level

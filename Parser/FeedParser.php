@@ -26,8 +26,6 @@ class FeedParser
     {
         preg_match_all('/{feedinfo:([^}]+)}/', $content, $tags);
 
-        $feed = $this->feed->getFeed();
-
         if (!empty($tags[1])) {
             foreach ($tags[1] as $tagIndex => $tag) {
                 $value = "Unknown ({$tag})";
