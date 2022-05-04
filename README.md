@@ -95,11 +95,11 @@ Returns: url of the image. Will check the enclosere and media tags of the xml.
 Returns: value of custom field in RSS feed.
 
 To use this functionality you have to:
-1. Add this to the xmlns definitions in your RSS-feed: `xmlns:mautic="https://www.mautic.org/rss/mautic/"`
-
-For example:
-```
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+1. Add this to the xmlns definitions in your RSS-feed: `xmlns:mautic="https://www.mautic.org/rss/mautic/"`  
+   
+   For example:
+   ```
+   <?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
 	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -108,9 +108,9 @@ For example:
 	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
 	xmlns:mautic="https://www.mautic.org/rss/mautic/">
 
-<channel>
-...
-```
+   <channel>
+   ...
+   ```
 
 2. Add the custom field to your RSS-feed with the following syntax:
 ```
