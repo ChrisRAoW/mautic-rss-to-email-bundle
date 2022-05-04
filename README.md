@@ -42,8 +42,8 @@ This should give a basic setup to start with.
 
 ### The following tags can be used in the {feed} block:
 
-* `{feedinfo:title}`
-  Returns: title of the feed
+* `{feedinfo:title}`  
+Returns: title of the feed
 
 * `{feedinfo:url}`
   Returns: url of the feed
