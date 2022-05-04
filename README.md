@@ -112,15 +112,11 @@ To use this functionality you have to:
    ...
    ```
 
-2. Add the custom field to your RSS-feed with the following syntax:
-```
-<mautic:location>New York</mautic:location>
-```
+2. Add the custom field to your RSS-feed with the following syntax:   
+   `<mautic:location>New York</mautic:location>`
 
-3. Inside your mail template use the following tag:
-```
-{feeditem:custom:location}
-```
+3. Inside your mail template use the following tag:  
+   `{feeditem:custom:location}`
 
 ### Icon
 
