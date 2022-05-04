@@ -42,81 +42,80 @@ This should give a basic setup to start with.
 
 ### The following tags can be used in the {feed} block:
 
-#### {feedinfo:title}
-Returns: title of the feed
+* `{feedinfo:title}`
+  Returns: title of the feed
 
-#### {feedinfo:url}
-Returns: url of the feed
+* `{feedinfo:url}`
+  Returns: url of the feed
 
-#### {feedinfo:description}
-Returns: description of the feed
-
+* `{feedinfo:description}`
+  Returns: description of the feed
 
 ### The following tags can be used in the {feeditems} block:
 
-Optional param: 
-- reverse {feeditems count="3" reverse="1"} - returns posts in reversed view
+**Optional param: **
+Reverse `{feeditems count="3" reverse="1"}` - returns posts in reversed view
 
-#### {feeditem:title}
-Returns: title of the post
+* `{feeditem:title}`
+  Returns: title of the post
 
-#### {feeditem:link}
-Returns: link to the post
+* `{feeditem:link}`
+  Returns: link to the post
 
-#### {feeditem:content}
-Returns: summarized content (desciption), when description is not available it will return the full content
+* `{feeditem:content}`
+  Returns: summarized content (desciption), when description is not available it will return the full content
 
-#### {feeditem:content_full}
-Returns: full content of the post
+* `{feeditem:content_full}`
+  Returns: full content of the post
 
-#### {feeditem:content_text}
-Returns: summarized content (desciption), when description is not available it will return the full content. Tags are stripped.
+* `{feeditem:content_text}`
+  Returns: summarized content (desciption), when description is not available it will return the full content. Tags are stripped.
 
-#### {feeditem:content_full_text}
-Returns: full content of the post stripped of tags
+* `{feeditem:content_full_text}`
+  Returns: full content of the post stripped of tags
 
-#### {feeditem:description}
-Returns: summarized content (desciption) of the post
+* `{feeditem:description}`
+  Returns: summarized content (desciption) of the post
 
-#### {feeditem:date}
-Optional param: format {feeditem:date format="d-m-Y H:i"}
-Returns: summarized content (desciption) of the post
+* `{feeditem:date}`
+  Optional param: format {feeditem:date format="d-m-Y H:i"}  
+  Returns: summarized content (desciption) of the post
 
-#### {feeditem:author}
-Returns: author name of the post
+* `{feeditem:author}`
+  Returns: author name of the post
 
-#### {feeditem:categories}
-Returns: comma seperated list of the categories
+* `{feeditem:categories}`
+  Returns: comma seperated list of the categories
 
-#### {feeditem:image}
-Returns: url of the image. Will check the enclosere and media tags of the xml.
+* `{feeditem:image}`
+  Returns: url of the image. Will check the enclosere and media tags of the xml.
 
-#### {feeditem:custom:KEY}
-Returns: value of custom field in RSS feed.
+* `{feeditem:custom:KEY}`
+  Returns: value of custom field in RSS feed.  
 
-To use this functionality you have to:
-1. Add this to the xmlns definitions in your RSS-feed: `xmlns:mautic="https://www.mautic.org/rss/mautic/"`  
-   
-   For example:
-   ```
-   <?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
-	xmlns:content="http://purl.org/rss/1.0/modules/content/"
-	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:atom="http://www.w3.org/2005/Atom"
-	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
-	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
-	xmlns:mautic="https://www.mautic.org/rss/mautic/">
+  To use this functionality you have to:
+  1. Add this to the xmlns definitions in your RSS-feed: `xmlns:mautic="https://www.mautic.org/rss/mautic/"`  
+     
+     For example:
+     ```
+     <?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	  xmlns:dc="http://purl.org/dc/elements/1.1/"
+	  xmlns:atom="http://www.w3.org/2005/Atom"
+	  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	  xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	  xmlns:mautic="https://www.mautic.org/rss/mautic/">
+  
+     <channel>
+     ...
+     ```
 
-   <channel>
-   ...
-   ```
+  2. Add the custom field to your RSS-feed with the following syntax:   
+     `<mautic:location>New York</mautic:location>`
 
-2. Add the custom field to your RSS-feed with the following syntax:   
-   `<mautic:location>New York</mautic:location>`
-
-3. Inside your mail template use the following tag:  
-   `{feeditem:custom:location}`
+  3. Inside your mail template use the following tag:  
+     `{feeditem:custom:location}`
 
 ### Icon
 
