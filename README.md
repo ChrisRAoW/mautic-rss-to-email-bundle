@@ -53,7 +53,7 @@ Returns: title of the feed
 
 ### The following tags can be used in the {feeditems} block:
 
-**Optional param: **
+__Optional param:__  
 Reverse `{feeditems count="3" reverse="1"}` - returns posts in reversed view
 
 * `{feeditem:title}`  
