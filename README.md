@@ -56,7 +56,8 @@ This should give a basic setup to start with.
 **Optional param: **
 Reverse `{feeditems count="3" reverse="1"}` - returns posts in reversed view
 
-* `{feeditem:title}`  
+* `{feeditem:title}`
+
   Returns: title of the post
 
 * `{feeditem:link}`  
