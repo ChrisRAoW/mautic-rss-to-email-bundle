@@ -56,9 +56,8 @@ Returns: title of the feed
 **Optional param: **
 Reverse `{feeditems count="3" reverse="1"}` - returns posts in reversed view
 
-* `{feeditem:title}`
-
-  Returns: title of the post
+* `{feeditem:title}`  
+Returns: title of the post
 
 * `{feeditem:link}`  
 Returns: link to the post
@@ -92,9 +91,9 @@ Returns: comma seperated list of the categories
 Returns: url of the image. Will check the enclosere and media tags of the xml.
 
 * `{feeditem:custom:KEY}`  
-Returns: value of custom field in RSS feed.  
+Returns: value of custom field in RSS feed.
 
-To use this functionality you have to:
+  To use this functionality you have to:
   1. Add this to the xmlns definitions in your RSS-feed: `xmlns:mautic="https://www.mautic.org/rss/mautic/"`  
      
      For example:
