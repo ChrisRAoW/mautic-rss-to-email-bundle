@@ -56,6 +56,7 @@ Returns: title of the feed
 __Optional param:__  
 Reverse `{feeditems count="3" reverse="1"}` - returns posts in reversed view
 
+__Merge tags:__  
 * `{feeditem:title}`  
 Returns: title of the post
 
