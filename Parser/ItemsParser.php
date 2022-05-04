@@ -23,6 +23,7 @@ class ItemsParser
             $items = $feed->get_items();
 
             $count = $this->getParam('count');
+            $offset = $this->getParam('offset') ?? 0;
             $reverse = $this->getParam('reverse');
             $shuffle = $this->getParam('shuffle');
 
@@ -34,8 +35,14 @@ class ItemsParser
                 shuffle($items);
             }
 
-            if (is_numeric($count)) {
-                array_splice($items, $count);
+            if (
+                (
+                    is_null($count) ||
+                    is_numeric($count)
+                ) &&
+                is_numeric($offset)
+            ) {
+                $items = array_splice($items, $offset, $count);
             }
 
             foreach ($items as $feedItem) {

@@ -29,7 +29,7 @@ Use the "code mode" slot of the froala/grapejs e-mail editor. In the content of 
 
 ```
 {feed url="<<FEEDURL>>"}
-    {feeditems count="3"}
+    {feeditems}
         <h3>{feeditem:title}</h3>
         <p><small>{feeditem:date format="d-m-Y H:i"}</small></p>
         <p>{feeditem:description}</p>
@@ -54,11 +54,17 @@ Returns: title of the feed
 ### The following tags can be used in the {feeditems} block:
 
 #### Optional param:
+* Count  
+`{feeditems count="3"}` - Returns only the first N items from the feed
+
+* Offset  
+`{feeditems count="3" offset="2"}` - Skips the first N items from the feed
+
 * Reverse  
-`{feeditems count="3" reverse="1"}` - returns posts in reversed view
+`{feeditems reverse="1"}` - Returns resuls in reversed view
 
 * Shuffle  
-`{feeditems count="3" shuffle="1"}` - returns posts in shuffled (random) view
+`{feeditems count="3" shuffle="1"}` - Returns results in shuffled (random) view, can be used in combination with the `count` parameter
 
 __Merge tags:__  
 * `{feeditem:title}`  
