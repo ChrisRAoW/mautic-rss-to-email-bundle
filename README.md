@@ -58,7 +58,7 @@ Returns: title of the feed
 `{feeditems count="3" reverse="1"}` - returns posts in reversed view
 
 * Shuffle  
-`{feeditems count="3" suffle="1"}` - returns posts in shuffled (random) view
+`{feeditems count="3" shuffle="1"}` - returns posts in shuffled (random) view
 
 __Merge tags:__  
 * `{feeditem:title}`  
