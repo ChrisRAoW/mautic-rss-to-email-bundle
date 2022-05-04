@@ -53,8 +53,12 @@ Returns: title of the feed
 
 ### The following tags can be used in the {feeditems} block:
 
-__Optional param:__  
-Reverse `{feeditems count="3" reverse="1"}` - returns posts in reversed view
+#### Optional param:
+* Reverse  
+`{feeditems count="3" reverse="1"}` - returns posts in reversed view
+
+* Shuffle  
+`{feeditems count="3" suffle="1"}` - returns posts in shuffled (random) view
 
 __Merge tags:__  
 * `{feeditem:title}`  

@@ -20,21 +20,26 @@ class ItemsParser
 
             $itemsContent = '';
 
-            $maxImages = $this->getParam('count');
-            $reverse = $this->getParam('reverse');
-
-            $item_i = 0;
             $items = $feed->get_items();
+
+            $count = $this->getParam('count');
+            $reverse = $this->getParam('reverse');
+            $shuffle = $this->getParam('shuffle');
+
             if ($reverse == 1) {
                 $items = array_reverse($items);
             }
 
+            if ($shuffle == 1) {
+                shuffle($items);
+            }
+
+            if (is_numeric($count)) {
+                array_splice($items, $count);
+            }
+
             foreach ($items as $feedItem) {
-                if (!empty($maxImages) && $maxImages == $item_i) break;
-
                 $itemsContent .= $this->parseItem($itemTemplate, $feedItem);
-
-                $item_i++;
             }
 
             $content = str_replace($feedItemMatches[0], $itemsContent, $content);
