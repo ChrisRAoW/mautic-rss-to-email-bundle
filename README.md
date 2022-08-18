@@ -55,7 +55,9 @@ Returns: title of the feed
 
 #### Optional param:
 * Batch mode
+
 By default batch-mode will be enabled. This means that the feed-tags will only be replaced once per batch. When you disable batch-mode, the feed will be parsed for every single e-mail. So if you have a list of 1000 addresses, the feed will be requested 1000 times. Because of the high number of requests in a short timeframe it could cause the server where the feed is on to go down. *So handle with care!*
+
 `{feed batch="0"}` - Will DISABLE batch-mode on the feed.
 
 * Count  
