@@ -32,11 +32,16 @@ class Parser
 
                 $feedContent = $matches[2][$key];
 
+                $batchMode = true;
+                if ($this->getParam('batch') === '0') {
+                    $batchMode = false;
+                }
+
                 $feedUrl = str_replace('&amp;', '&', $this->getParam('url'));
 
-                // Replace tokens is only for e-mail send via the API. 
-                // The feed is only parsed once a batch. 
-                // So for multiple e-mails it will inconsistent results.
+                // Replace tokens is only for e-mails sent via the API or when batch mode is disabled. 
+                // The feed is only parsed once when batch mode is enabled. 
+                // So for multiple e-mails (batch mode) it will cause inconsistent results.
                 $feedUrl = $this->replaceTokens($this->getParam('url'));
 
                 // The editor replaces &-characters by the html-entity &amp;.
@@ -56,8 +61,13 @@ class Parser
                     $feedParserContent = "Error: {$feed->error()}";
                 }
 
-                // $this->getEvent()->addToken($feedWrapper, $parser->parse()); // Use later to do feed parsing on contact level
-                $content = str_replace($feedWrapper, $feedParserContent, $content);
+                $feedParserContent = uniqid() . ' - ' . $feedParserContent;
+
+                if ($batchMode) {
+                    $content = str_replace($feedWrapper, $feedParserContent, $content);
+                } else {
+                    $this->getEvent()->addToken($feedWrapper, $feedParserContent);
+                }
             }
         }
 
