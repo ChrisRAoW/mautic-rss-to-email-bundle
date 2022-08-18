@@ -61,8 +61,6 @@ class Parser
                     $feedParserContent = "Error: {$feed->error()}";
                 }
 
-                $feedParserContent = uniqid() . ' - ' . $feedParserContent;
-
                 if ($batchMode) {
                     $content = str_replace($feedWrapper, $feedParserContent, $content);
                 } else {
