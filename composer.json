@@ -8,6 +8,6 @@
         }
     ],
     "require": {
-        "simplepie/simplepie": "^1.5"
+        "simplepie/simplepie": "~1.5.0"
     }
 }

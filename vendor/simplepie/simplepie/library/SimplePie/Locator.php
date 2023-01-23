@@ -5,7 +5,7 @@
  * A PHP-Based RSS and Atom Feed Framework.
  * Takes the hard work out of managing a complete RSS/Atom solution.
  *
- * Copyright (c) 2004-2016, Ryan Parman, Geoffrey Sneddon, Ryan McCue, and contributors
+ * Copyright (c) 2004-2016, Ryan Parman, Sam Sneddon, Ryan McCue, and contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -33,9 +33,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @copyright 2004-2016 Ryan Parman, Geoffrey Sneddon, Ryan McCue
+ * @copyright 2004-2016 Ryan Parman, Sam Sneddon, Ryan McCue
  * @author Ryan Parman
- * @author Geoffrey Sneddon
+ * @author Sam Sneddon
  * @author Ryan McCue
  * @link http://simplepie.org/ SimplePie
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -64,6 +64,7 @@ class SimplePie_Locator
 	var $max_checked_feeds = 10;
 	var $force_fsockopen = false;
 	var $curl_options = array();
+	var $dom;
 	protected $registry;
 
 	public function __construct(SimplePie_File $file, $timeout = 10, $useragent = null, $max_checked_feeds = 10, $force_fsockopen = false, $curl_options = array())
@@ -75,12 +76,19 @@ class SimplePie_Locator
 		$this->force_fsockopen = $force_fsockopen;
 		$this->curl_options = $curl_options;
 
-		if (class_exists('DOMDocument'))
+		if (class_exists('DOMDocument') && $this->file->body != '')
 		{
 			$this->dom = new DOMDocument();
 
 			set_error_handler(array('SimplePie_Misc', 'silence_errors'));
-			$this->dom->loadHTML($this->file->body);
+			try
+			{
+				$this->dom->loadHTML($this->file->body);
+			}
+			catch (Throwable $ex)
+			{
+				$this->dom = null;
+			}
 			restore_error_handler();
 		}
 		else
@@ -94,7 +102,7 @@ class SimplePie_Locator
 		$this->registry = $registry;
 	}
 
-	public function find($type = SIMPLEPIE_LOCATOR_ALL, &$working)
+	public function find($type = SIMPLEPIE_LOCATOR_ALL, &$working = null)
 	{
 		if ($this->is_feed($this->file))
 		{
@@ -402,7 +410,7 @@ class SimplePie_Locator
 			{
 				break;
 			}
-			if (preg_match('/(rss|rdf|atom|xml)/i', $value))
+			if (preg_match('/(feed|rss|rdf|atom|xml)/i', $value))
 			{
 				$this->checked_feeds++;
 				$headers = array(
