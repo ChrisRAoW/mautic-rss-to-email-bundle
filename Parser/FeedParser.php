@@ -32,13 +32,13 @@ class FeedParser
 
                 switch ($tag) {
                     case 'title':
-                        $value = $feed->get_title();
+                        $value = $this->feed->get_title();
                         break;
                     case 'url':
-                        $value = $feed->feed_url;
+                        $value = $this->feed->feed_url;
                         break;
                     case 'description':
-                        $value = $feed->get_description();
+                        $value = $this->feed->get_description();
                         break;
                 }
 
