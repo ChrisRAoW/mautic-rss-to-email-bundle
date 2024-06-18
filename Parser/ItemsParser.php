@@ -20,7 +20,7 @@ class ItemsParser
         preg_match('/{feeditems([^}]*)}(.*){\/feeditems}/ms', $content, $feedItemMatches);
 
         if ($feedItemMatches) {
-            $params       = $this->parseParams($feedItemMatches[1]);
+            $this->parseParams($feedItemMatches[1]);
             $itemTemplate = $feedItemMatches[2];
 
             $itemsContent = '';
@@ -28,7 +28,7 @@ class ItemsParser
             $items = $feed->get_items();
 
             $count = $this->getParam('count');
-            $offset = $this->getParam('offset') ?? 0;
+            $offset = $this->getParam('offset') ?? '0';
             $reverse = $this->getParam('reverse');
             $shuffle = $this->getParam('shuffle');
 
@@ -41,7 +41,7 @@ class ItemsParser
             }
 
             if (($count === null || is_numeric($count)) && is_numeric($offset)) {
-                $items = array_splice($items, $offset, $count);
+                $items = array_splice($items, (int)$offset, $count);
             }
 
             foreach ($items as $feedItem) {

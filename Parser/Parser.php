@@ -77,6 +77,10 @@ class Parser
         $this->setContent($content);
     }
 
+    /**
+     * @param string|string[] $value
+     * @return string|array
+     */
     public function replaceTokens($value)
     {
         $tokens = $this->getEvent()->getTokens();
