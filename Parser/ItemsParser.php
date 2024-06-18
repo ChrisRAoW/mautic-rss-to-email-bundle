@@ -8,8 +8,13 @@ class ItemsParser
 {
     use ParamsTrait;
 
+    /** @var string */
     protected $content;
 
+    /**
+     * @param string $content
+     * @param \SimplePie $feed
+     */
     public function __construct($content, $feed)
     {
         preg_match('/{feeditems([^}]*)}(.*){\/feeditems}/ms', $content, $feedItemMatches);
@@ -35,13 +40,7 @@ class ItemsParser
                 shuffle($items);
             }
 
-            if (
-                (
-                    is_null($count) ||
-                    is_numeric($count)
-                ) &&
-                is_numeric($offset)
-            ) {
+            if (($count === null || is_numeric($count)) && is_numeric($offset)) {
                 $items = array_splice($items, $offset, $count);
             }
 
@@ -55,6 +54,11 @@ class ItemsParser
         $this->setContent($content);
     }
 
+    /**
+     * @param string $itemTemplate
+     * @param \SimplePie_Item $feedItem
+     * @return string
+     */
     public function parseItem($itemTemplate, $feedItem)
     {
         preg_match_all('/{feeditem:([^ }:]+)(:([^ }:]+))?( [^}]+)?}/', $itemTemplate, $tags);
@@ -81,11 +85,13 @@ class ItemsParser
         return $itemTemplate;
     }
 
+    /** @param string $content */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /** @return string */
     public function getContent()
     {
         return $this->content;
