@@ -33,24 +33,18 @@ class ItemTag
 
         switch ($this->tag) {
             case 'title':
-                $value = $feedItem->get_title();
-                break;
+                return $feedItem->get_title();
             case 'link':
-                $value = $feedItem->get_link();
-                break;
+                return $feedItem->get_link();
             case 'content':
             case 'description':
-                $value = $feedItem->get_description();
-                break;
+            return $feedItem->get_description();
             case 'content_full':
-                $value = $feedItem->get_content(true);
-                break;
+                return $feedItem->get_content(true);
             case 'content_text':
-                $value = strip_tags($feedItem->get_description());
-                break;
+                return strip_tags($feedItem->get_description());
             case 'content_full_text':
-                $value = strip_tags($feedItem->get_content(true));
-                break;
+                return strip_tags($feedItem->get_content(true));
             case 'date':
                 $format = 'j F Y, g:i a';
 
@@ -58,18 +52,16 @@ class ItemTag
                     $format = $this->getParam('format');
                 }
 
-                $value = $feedItem->get_date($format);
-                break;
+                return $feedItem->get_date($format);
             case 'author':
                 $author = $feedItem->get_author();
 
                 // TODO: Seems unintentional/backwards?
-                if ($author !== null) {
-                    $value = $author->get_link();
-                }
+//                if ($author !== null) {
+//                    $value = $author->get_link();
+//                }
 
-                $value = $author->get_name();
-                break;
+                return $author->get_name();
             case 'categories':
                 $categories = $feedItem->get_categories();
                 $categoriesList = [];
@@ -80,16 +72,11 @@ class ItemTag
                     }
                 }
 
-                $value = implode(', ', $categoriesList);
-                break;
+                return implode(', ', $categoriesList);
             case 'image':
                 $enclosure = $feedItem->get_enclosure();
-                $value     = '';
 
-                if ($enclosure !== null) {
-                    $value = $enclosure->get_link();
-                }
-                break;
+                return ($enclosure) ? $enclosure->get_link() : '';
             case 'custom':
                 $key = null;
 
@@ -101,16 +88,13 @@ class ItemTag
 
                 $itemTag = $feedItem->get_item_tags('https://www.mautic.org/rss/mautic/', $key);
 
-                $value = $itemTag[0]['data'] ?? null;
-
-                break;
+                return $itemTag[0]['data'] ?? null;
             default:
                 $itemTag = $feedItem->get_item_tags('', $this->tag);
                 
                 if($itemTag) {
-                    $value = $itemTag[0]['data'];
+                    return $itemTag[0]['data'];
                 }
-                break;
         }
 
         return $value;
