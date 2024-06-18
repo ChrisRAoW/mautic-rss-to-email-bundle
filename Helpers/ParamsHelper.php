@@ -3,6 +3,10 @@ namespace MauticPlugin\MauticRssToEmailBundle\Helpers;
 
 class ParamsHelper
 {
+    /**
+     * @param string $paramsString
+     * @return string[]
+     */
     public static function parse($paramsString)
     {
         $params = [];
