@@ -19,7 +19,7 @@ class ItemsParser
     {
         preg_match('/{feeditems([^}]*)}(.*){\/feeditems}/ms', $content, $feedItemMatches);
 
-        if (!empty($feedItemMatches)) {
+        if ($feedItemMatches) {
             $params       = $this->parseParams($feedItemMatches[1]);
             $itemTemplate = $feedItemMatches[2];
 
@@ -32,11 +32,11 @@ class ItemsParser
             $reverse = $this->getParam('reverse');
             $shuffle = $this->getParam('shuffle');
 
-            if ($reverse == 1) {
+            if ($reverse) {
                 $items = array_reverse($items);
             }
 
-            if ($shuffle == 1) {
+            if ($shuffle) {
                 shuffle($items);
             }
 
@@ -64,7 +64,6 @@ class ItemsParser
         preg_match_all('/{feeditem:([^ }:]+)(:([^ }:]+))?( [^}]+)?}/', $itemTemplate, $tags);
 
         if (!empty($tags[1])) {
-
             foreach ($tags[1] as $tagIndex => $tag) {
                 $params = [];
 

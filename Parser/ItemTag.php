@@ -25,11 +25,10 @@ class ItemTag
         $this->feedItem = $feedItem;
     }
 
+    /** @return string|int|null */
     public function getValue()
     {
         $feedItem = $this->feedItem;
-
-        $value = "Unknown ({$this->tag})";
 
         switch ($this->tag) {
             case 'title':
@@ -46,22 +45,11 @@ class ItemTag
             case 'content_full_text':
                 return strip_tags($feedItem->get_content(true));
             case 'date':
-                $format = 'j F Y, g:i a';
-
-                if (!empty($this->getParam('format'))) {
-                    $format = $this->getParam('format');
-                }
-
-                return $feedItem->get_date($format);
+                return $feedItem->get_date($this->getParam('format') ?: 'j F Y, g:i a');
             case 'author':
                 $author = $feedItem->get_author();
 
-                // TODO: Seems unintentional/backwards?
-//                if ($author !== null) {
-//                    $value = $author->get_link();
-//                }
-
-                return $author->get_name();
+                return ($author) ? $author->get_name() : null;
             case 'categories':
                 $categories = $feedItem->get_categories();
                 $categoriesList = [];
@@ -78,25 +66,18 @@ class ItemTag
 
                 return ($enclosure) ? $enclosure->get_link() : '';
             case 'custom':
-                $key = null;
-
-                if (!empty($this->getParam('subTag'))) {
-                    $key = $this->getParam('subTag');
-                } elseif (!empty($this->getParam('key'))) {
-                    $key = $this->getParam('key');
-                }
-
+                $key = $this->getParam('subTag') ?: $this->getParam('key') ?: null;
                 $itemTag = $feedItem->get_item_tags('https://www.mautic.org/rss/mautic/', $key);
 
                 return $itemTag[0]['data'] ?? null;
             default:
                 $itemTag = $feedItem->get_item_tags('', $this->tag);
                 
-                if($itemTag) {
+                if ($itemTag) {
                     return $itemTag[0]['data'];
                 }
         }
 
-        return $value;
+        return "Unknown ({$this->tag})";
     }
 }
