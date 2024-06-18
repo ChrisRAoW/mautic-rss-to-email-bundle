@@ -17,4 +17,4 @@ class MauticRssToEmailBundle extends PluginBundleBase
 {
 }
 
-include(dirname(__FILE__) . '/vendor/autoload.php');
+include(__DIR__ . '/vendor/autoload.php');
