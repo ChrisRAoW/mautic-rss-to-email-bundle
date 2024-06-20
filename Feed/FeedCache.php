@@ -6,7 +6,7 @@ class FeedCache
 {
     /** @var self */
     private static $instance;
-    /** @var \SimplePie[] */
+    /** @var array<string, \SimplePie> */
     protected $feeds = [];
 
     /** @return self */
@@ -19,7 +19,7 @@ class FeedCache
         return self::$instance;
     }
 
-    /** @return \SimplePie[] */
+    /** @return array<string, \SimplePie> */
     public function getFeeds()
     {
         return $this->feeds;

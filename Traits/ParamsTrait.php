@@ -5,12 +5,12 @@ use MauticPlugin\MauticRssToEmailBundle\Helpers\ParamsHelper;
 
 trait ParamsTrait
 {
-    /** @var string[] */
+    /** @var array<string, string> */
     private $params = [];
 
     /**
      * @param string $paramsString
-     * @return string[]
+     * @return array<string, string>
      */
     public function parseParams($paramsString)
     {
@@ -22,7 +22,7 @@ trait ParamsTrait
     }
 
     /**
-     * @param string[] $params
+     * @param array<string, string> $params
      * @return void
      */
     public function setParams($params)
@@ -30,7 +30,7 @@ trait ParamsTrait
         $this->params = $params;
     }
 
-    /** @return string[] */
+    /** @return array<string, string> */
     public function getParams()
     {
         return $this->params;

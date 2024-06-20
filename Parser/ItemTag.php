@@ -14,18 +14,17 @@ class ItemTag
 
     /**
      * @param string $tag
-     * @param array $params
+     * @param array<string, string> $params
      * @param \SimplePie_Item $feedItem
      */
     public function __construct($tag, $params, $feedItem)
     {
         $this->tag = $tag;
         $this->setParams($params);
-
         $this->feedItem = $feedItem;
     }
 
-    /** @return string|int|null */
+    /** @return string|null */
     public function getValue()
     {
         $feedItem = $this->feedItem;

@@ -12,9 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class EmailSubscriber implements EventSubscriberInterface
 {
 
-    /**
-     * @return array
-     */
+    /** @return array<string, array{0: "onEmailGenerate", 1: int}> */
     public static function getSubscribedEvents()
     {
         return [
@@ -27,6 +25,7 @@ class EmailSubscriber implements EventSubscriberInterface
      * Search and replace tokens with content
      *
      * @param EmailSendEvent $event
+     * @return void
      */
     public function onEmailGenerate(EmailSendEvent $event)
     {
