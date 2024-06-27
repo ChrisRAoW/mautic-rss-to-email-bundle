@@ -42,6 +42,12 @@ trait ParamsTrait
      */
     public function getParam($key)
     {
-        return $this->getParams()[$key] ?? null;
+        $params = $this->getParams();
+
+        if (!is_array($params) || !isset($params[$key])) {
+            return null;
+        }
+
+        return $params[$key];
     }
 }
