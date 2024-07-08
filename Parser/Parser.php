@@ -9,9 +9,15 @@ class Parser
 {
     use ParamsTrait;
 
+    /** @var \Mautic\EmailBundle\Event\EmailSendEvent */
     protected $event;
+    /** @var string */
     protected $content;
 
+    /**
+     * @param string $content
+     * @param \Mautic\EmailBundle\Event\EmailSendEvent $event
+     */
     public function __construct($content, $event)
     {
         $this->setContent($content);
@@ -20,6 +26,7 @@ class Parser
         $this->parseContent();
     }
 
+    /** @return void */
     public function parseContent()
     {
         $content = $this->getContent();
@@ -37,8 +44,6 @@ class Parser
                     $batchMode = false;
                 }
 
-                $feedUrl = str_replace('&amp;', '&', $this->getParam('url'));
-
                 // Replace tokens is only for e-mails sent via the API or when batch mode is disabled. 
                 // The feed is only parsed once when batch mode is enabled. 
                 // So for multiple e-mails (batch mode) it will cause inconsistent results.
@@ -54,7 +59,7 @@ class Parser
 
                 $feed = Feed::fetch($feedUrl);
 
-                if (is_null($feed->error())) {
+                if ($feed->error() === null) {
                     $feedParser        = new FeedParser($feedContent, $feed);
                     $feedParserContent = $feedParser->getContent();
                 } else {
@@ -72,11 +77,15 @@ class Parser
         $this->setContent($content);
     }
 
+    /**
+     * @param string|string[] $value
+     * @return string|array
+     */
     public function replaceTokens($value)
     {
         $tokens = $this->getEvent()->getTokens();
 
-        if (!empty($tokens)) {
+        if ($tokens) {
             $search  = array_keys($tokens);
             $replace = $tokens;
 
@@ -88,22 +97,29 @@ class Parser
         return $value;
     }
 
+    /** @return bool */
     public function validateFeedUrl($url)
     {
         $url = trim($url);
-        return !empty($url) && filter_var($url, FILTER_VALIDATE_URL);
+        return $url && filter_var($url, FILTER_VALIDATE_URL);
     }
 
+    /**
+     * @param string $content
+     * @return void
+     */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /** @return string */
     public function getContent()
     {
         return $this->content;
     }
 
+    /** @return \Mautic\EmailBundle\Event\EmailSendEvent */
     public function getEvent()
     {
         return $this->event;

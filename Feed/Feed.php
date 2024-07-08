@@ -5,6 +5,10 @@ use SimplePie;
 
 class Feed
 {
+    /**
+     * @param string $url
+     * @return \SimplePie|null
+     */
     public static function fetch(string $url)
     {
         if (FeedCache::exists($url)) {
@@ -22,5 +26,4 @@ class Feed
 
         return $feed;
     }
-
 }

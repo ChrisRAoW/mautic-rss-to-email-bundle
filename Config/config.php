@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use MauticPlugin\MauticRssToEmailBundle\EventListener\EmailSubscriber;
 
 return [
     'name'        => 'RSS To Email',
@@ -8,7 +10,7 @@ return [
     'services' => [
         'events' => [
             'mautic.plugin.rsstoemail.subscriber' => [
-                'class'     => \MauticPlugin\MauticRssToEmailBundle\EventListener\EmailSubscriber::class,
+                'class' => EmailSubscriber::class,
             ],
         ],
     ],

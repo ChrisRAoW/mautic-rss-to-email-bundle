@@ -7,9 +7,15 @@ class FeedParser
 {
     use ParamsTrait;
 
+    /** @var \SimplePie */
     public $feed;
+    /** @var string */
     protected $content;
 
+    /**
+     * @param string $content
+     * @param \SimplePie $feed
+     */
     public function __construct($content, $feed)
     {
         $this->feed = $feed;
@@ -22,6 +28,10 @@ class FeedParser
         $this->setContent($content);
     }
 
+    /**
+     * @param string $content
+     * @return string
+     */
     public function parseInfo($content)
     {
         preg_match_all('/{feedinfo:([^}]+)}/', $content, $tags);
@@ -49,11 +59,13 @@ class FeedParser
         return $content;
     }
 
+    /** @param string $content */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /** @return string */
     public function getContent()
     {
         return $this->content;

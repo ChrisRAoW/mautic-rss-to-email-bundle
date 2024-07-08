@@ -7,104 +7,76 @@ class ItemTag
 {
     use ParamsTrait;
 
+    /** @var string */
     public $tag;
+    /** @var \SimplePie_Item */
     public $feedItem;
 
+    /**
+     * @param string $tag
+     * @param array<string, string> $params
+     * @param \SimplePie_Item $feedItem
+     */
     public function __construct($tag, $params, $feedItem)
     {
         $this->tag = $tag;
         $this->setParams($params);
-
         $this->feedItem = $feedItem;
     }
 
+    /** @return string|null */
     public function getValue()
     {
         $feedItem = $this->feedItem;
 
-        $value = "Unknown ({$this->tag})";
-
         switch ($this->tag) {
             case 'title':
-                $value = $feedItem->get_title();
-                break;
+                return $feedItem->get_title();
             case 'link':
-                $value = $feedItem->get_link();
-                break;
+                return $feedItem->get_link();
             case 'content':
-                $value = $feedItem->get_description();
-                break;
-            case 'content_full':
-                $value = $feedItem->get_content(true);
-                break;
-            case 'content_text':
-                $value = strip_tags($feedItem->get_description());
-                break;
-            case 'content_full_text':
-                $value = strip_tags($feedItem->get_content(true));
-                break;
             case 'description':
-                $value = $feedItem->get_description();
-                break;
+            return $feedItem->get_description();
+            case 'content_full':
+                return $feedItem->get_content(true);
+            case 'content_text':
+                return strip_tags($feedItem->get_description());
+            case 'content_full_text':
+                return strip_tags($feedItem->get_content(true));
             case 'date':
-                $format = 'j F Y, g:i a';
-                if (!empty($this->getParam('format'))) {
-                    $format = $this->getParam('format');
-                }
-
-                $value = $feedItem->get_date($format);
-                break;
+                return $feedItem->get_date($this->getParam('format') ?: 'j F Y, g:i a');
             case 'author':
                 $author = $feedItem->get_author();
 
-                if (!is_null($author)) {
-                    $value = $author->get_link();
-                }
-
-                $value = $feedItem->get_author()->get_name();
-                break;
+                return ($author) ? $author->get_name() : null;
             case 'categories':
                 $categories = $feedItem->get_categories();
                 $categoriesList = [];
 
-                if (!empty($categories)) foreach ($categories as $category)
-                {
-                    $categoriesList[] = $category->get_label();
+                if ($categories) {
+                    foreach ($categories as $category) {
+                        $categoriesList[] = $category->get_label();
+                    }
                 }
 
-                $value = implode(', ', $categoriesList);
-                break;
+                return implode(', ', $categoriesList);
             case 'image':
                 $enclosure = $feedItem->get_enclosure();
-                $value     = '';
 
-                if (!is_null($enclosure)) {
-                    $value = $enclosure->get_link();
-                }
-                break;
+                return ($enclosure) ? $enclosure->get_link() : '';
             case 'custom':
-                $key = null;
-
-                if (!empty($this->getParam('subTag'))) {
-                    $key = $this->getParam('subTag');
-                } elseif (!empty($this->getParam('key'))) {
-                    $key = $this->getParam('key');
-                }
-
+                $key = $this->getParam('subTag') ?: $this->getParam('key') ?: null;
                 $itemTag = $feedItem->get_item_tags('https://www.mautic.org/rss/mautic/', $key);
 
-                $value = $itemTag[0]['data'] ?? null;
-
-                break;
+                return $itemTag[0]['data'] ?? null;
             default:
                 $itemTag = $feedItem->get_item_tags('', $this->tag);
                 
-                if(!empty($itemTag)) {
-                    $value = $itemTag[0]['data'];
+                if ($itemTag) {
+                    return $itemTag[0]['data'];
                 }
-                break;
         }
 
-        return $value;
+        return "Unknown ({$this->tag})";
     }
 }
