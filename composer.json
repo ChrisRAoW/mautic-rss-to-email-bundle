@@ -3,6 +3,7 @@
     "description": "Mautic plugin that renders RSS/Atom feed items inside e-mails",
     "type": "mautic-plugin",
     "license": "GPL-3.0-or-later",
+    "version": "2.0.0",
     "authors": [
         {
             "name": "Chris Schrijver",
