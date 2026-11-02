@@ -1,11 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MauticPlugin\MauticRssToEmailBundle\Traits;
 
 use MauticPlugin\MauticRssToEmailBundle\Helpers\ParamsHelper;
 
 trait ParamsTrait
 {
-    public function parseParams($paramsString)
+    /**
+     * @var array<string, string>
+     */
+    protected array $params = [];
+
+    /**
+     * @return array<string, string>
+     */
+    public function parseParams(string $paramsString): array
     {
         $params = ParamsHelper::parse($paramsString);
 
@@ -14,22 +25,24 @@ trait ParamsTrait
         return $params;
     }
 
-    public function setParams($params)
+    /**
+     * @param array<string, string> $params
+     */
+    public function setParams(array $params): void
     {
         $this->params = $params;
     }
 
-    public function getParams()
+    /**
+     * @return array<string, string>
+     */
+    public function getParams(): array
     {
         return $this->params;
     }
 
-    public function getParam($key)
+    public function getParam(string $key): ?string
     {
-        if (!is_array($params = $this->getParams()) || !isset($params[$key])) {
-            return null;
-        }
-
-        return $params[$key];
+        return $this->params[$key] ?? null;
     }
 }

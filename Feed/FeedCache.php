@@ -1,50 +1,51 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MauticPlugin\MauticRssToEmailBundle\Feed;
+
+use SimplePie\SimplePie;
 
 class FeedCache
 {
-    private static $instance = null;
+    private static ?FeedCache $instance = null;
 
-    protected $feeds = [];
+    /**
+     * @var array<string, SimplePie>
+     */
+    protected array $feeds = [];
 
-    public static function getInstance()
+    public static function getInstance(): self
     {
-      if (self::$instance == null)
-      {
-        self::$instance = new self();
-      }
-   
-      return self::$instance;
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
-    public function getFeeds()
+    /**
+     * @return array<string, SimplePie>
+     */
+    public function getFeeds(): array
     {
         return $this->feeds;
     }
 
-    public static function push(string $url, $feed)
+    public static function push(string $url, SimplePie $feed): void
     {
-        if (!self::getInstance()->exists($url)) {
+        if (!self::exists($url)) {
             self::getInstance()->feeds[$url] = $feed;
         }
     }
 
-    public static function exists($url):bool
+    public static function exists(string $url): bool
     {
-        if (isset(self::getInstance()->getFeeds()[$url])) {
-            return true;
-        }
-
-        return false;
+        return isset(self::getInstance()->feeds[$url]);
     }
 
-    public static function get($url)
+    public static function get(string $url): ?SimplePie
     {
-        if (self::getInstance()->exists($url)) {
-            return self::getInstance()->getFeeds()[$url];
-        }
-
-        return null;
+        return self::getInstance()->feeds[$url] ?? null;
     }
-
 }

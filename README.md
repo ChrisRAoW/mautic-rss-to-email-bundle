@@ -7,7 +7,9 @@ The Mautic RssToEmailBundle is a Mautic plugin that allows you to generate e-mai
 Send out an e-mail with for example to latest posts of your blog.
 
 ### Compatibility
-This plugin has been tested with Mautic versions 2.x, 3.x and 4.x.
+Version 2.x of this plugin requires Mautic 7.x and PHP 8.4 or higher.
+
+For Mautic 2.x, 3.x and 4.x use version 1.x of this plugin.
 
 ### Features
  * Set the number of posts you want to display
@@ -20,12 +22,15 @@ This plugin has been tested with Mautic versions 2.x, 3.x and 4.x.
 
 1. Download the plugin from github
 2. Move / Upload folder to the plugins directory. Name the folder `MauticRssToEmailBundle`
-3. In the Mautic GUI, go to the gear and then to Plugins.
-4. Click on the "Install/Upgrade Plugins" button
-5. You should now see the "Rss To Email" in your list of plugins.
+3. Clear the cache: `php bin/console cache:clear`
+4. In the Mautic GUI, go to the gear and then to Plugins.
+5. Click on the "Install/Upgrade Plugins" button (or run `php bin/console mautic:plugins:reload`)
+6. You should now see the "Rss To Email" in your list of plugins.
+
+The `vendor` folder (SimplePie) is shipped with the plugin. When you change `composer.json`, run `composer update --no-dev` inside the plugin folder to rebuild it.
 
 ## [Usage](id:usage)
-Use the "code mode" slot of the froala/grapejs e-mail editor. In the content of the slot set to following content:
+Use a "Custom code" block in the GrapesJS e-mail builder (or the code editor). In the content of the slot set to following content:
 
 ```
 {feed url="<<FEEDURL>>"}

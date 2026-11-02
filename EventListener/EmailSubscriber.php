@@ -1,21 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MauticPlugin\MauticRssToEmailBundle\EventListener;
 
-use MauticPlugin\MauticRssToEmailBundle\Parser\Parser;
 use Mautic\EmailBundle\EmailEvents;
 use Mautic\EmailBundle\Event\EmailSendEvent;
+use MauticPlugin\MauticRssToEmailBundle\Parser\Parser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class EmailSubscriber
- */
 class EmailSubscriber implements EventSubscriberInterface
 {
-
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             EmailEvents::EMAIL_ON_SEND    => ['onEmailGenerate', 300],
@@ -24,32 +20,29 @@ class EmailSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Search and replace tokens with content
-     *
-     * @param EmailSendEvent $event
+     * Search and replace tokens with content.
      */
-    public function onEmailGenerate(EmailSendEvent $event)
+    public function onEmailGenerate(EmailSendEvent $event): void
     {
         // Get HTML Content, Parse it, Generate New Content
-        $content = $event->getContent();
-        $parser  = new Parser($content, $event);
-        $content = $parser->getContent();
-
-        // Set HTML Content
-        $event->setContent($content);
+        $content = (string) $event->getContent();
+        $parsed  = (new Parser($content, $event))->getContent();
+        if ($parsed !== $content) {
+            $event->setContent($parsed);
+        }
 
         // Get Plain Text Content, Parse it, Generate New Content
-        $content = $event->getPlainText();
-        $parser  = new Parser($content, $event);
-        $content = $parser->getContent();
-
-        // Set Plain Text Content
-        $event->setPlainText($content);
+        $content = (string) $event->getPlainText();
+        $parsed  = (new Parser($content, $event))->getContent();
+        if ($parsed !== $content) {
+            $event->setPlainText($parsed);
+        }
 
         // Also replace feed items in the subject
-        $content = $event->getSubject();
-        $parser  = new Parser($content, $event);
-        $content = $parser->getContent();
-        $event->setSubject($content);
+        $content = (string) $event->getSubject();
+        $parsed  = (new Parser($content, $event))->getContent();
+        if ($parsed !== $content) {
+            $event->setSubject($parsed);
+        }
     }
 }

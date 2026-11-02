@@ -8,11 +8,17 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return function (ContainerConfigurator $configurator): void {
     $services = $configurator->services()
         ->defaults()
-        // ->autowire()
+        ->autowire()
         ->autoconfigure()
         ->public();
 
+    // Plain PHP classes that are instantiated manually and must not be registered as services.
     $excludes = [
+        'Feed',
+        'Helpers',
+        'Parser',
+        'Traits',
+        'vendor',
     ];
 
     $services->load('MauticPlugin\\MauticRssToEmailBundle\\', '../')

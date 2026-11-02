@@ -1,30 +1,34 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MauticPlugin\MauticRssToEmailBundle\Parser;
 
+use Mautic\EmailBundle\Event\EmailSendEvent;
+use Mautic\LeadBundle\Entity\Lead;
+use Mautic\LeadBundle\Helper\TokenHelper;
 use MauticPlugin\MauticRssToEmailBundle\Feed\Feed;
 use MauticPlugin\MauticRssToEmailBundle\Traits\ParamsTrait;
-use Mautic\LeadBundle\Helper\TokenHelper;
 
 class Parser
 {
     use ParamsTrait;
 
-    protected $event;
-    protected $content;
+    protected string $content;
 
-    public function __construct($content, $event)
+    public function __construct(string $content, protected EmailSendEvent $event)
     {
         $this->setContent($content);
-        $this->event = $event;
 
         $this->parseContent();
     }
 
-    public function parseContent()
+    public function parseContent(): void
     {
         $content = $this->getContent();
 
-        preg_match_all('/{feed((?:[^{}]|{[^}]*})*)}(.*){\/feed}/msU', $content, $matches);
+        // The tag name must be followed by whitespace or "}" so {feedinfo:*} and {feeditems} are not mistaken for a feed.
+        preg_match_all('/{feed((?:\s(?:[^{}]|{[^}]*})*)?)}(.*){\/feed}/msU', $content, $matches);
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $key => $feedWrapper) {
@@ -33,16 +37,14 @@ class Parser
                 $feedContent = $matches[2][$key];
 
                 $batchMode = true;
-                if ($this->getParam('batch') === '0') {
+                if ('0' === $this->getParam('batch')) {
                     $batchMode = false;
                 }
 
-                $feedUrl = str_replace('&amp;', '&', $this->getParam('url'));
-
-                // Replace tokens is only for e-mails sent via the API or when batch mode is disabled. 
-                // The feed is only parsed once when batch mode is enabled. 
+                // Replace tokens is only for e-mails sent via the API or when batch mode is disabled.
+                // The feed is only parsed once when batch mode is enabled.
                 // So for multiple e-mails (batch mode) it will cause inconsistent results.
-                $feedUrl = $this->replaceTokens($this->getParam('url'));
+                $feedUrl = $this->replaceTokens((string) $this->getParam('url'));
 
                 // The editor replaces &-characters by the html-entity &amp;.
                 $feedUrl = str_replace('&amp;', '&', $feedUrl);
@@ -52,13 +54,14 @@ class Parser
                     continue;
                 }
 
-                $feed = Feed::fetch($feedUrl);
+                $feed  = Feed::fetch($feedUrl);
+                $error = $feed->error();
 
-                if (is_null($feed->error())) {
+                if (empty($error)) {
                     $feedParser        = new FeedParser($feedContent, $feed);
                     $feedParserContent = $feedParser->getContent();
                 } else {
-                    $feedParserContent = "Error: {$feed->error()}";
+                    $feedParserContent = 'Error: '.(is_array($error) ? implode(', ', $error) : $error);
                 }
 
                 if ($batchMode) {
@@ -72,39 +75,45 @@ class Parser
         $this->setContent($content);
     }
 
-    public function replaceTokens($value)
+    public function replaceTokens(string $value): string
     {
         $tokens = $this->getEvent()->getTokens();
 
         if (!empty($tokens)) {
-            $search  = array_keys($tokens);
-            $replace = $tokens;
-
-            $value = str_ireplace($search, $replace, $value);
+            $value = str_ireplace(array_keys($tokens), $tokens, $value);
         }
 
-        $value = TokenHelper::findLeadTokens($value, $this->getEvent()->getLead(), true);
+        $lead = $this->getEvent()->getLead();
+
+        if ($lead instanceof Lead) {
+            $lead = $lead->getProfileFields();
+        }
+
+        if (is_array($lead) && !empty($lead)) {
+            $value = (string) TokenHelper::findLeadTokens($value, $lead, true);
+        }
 
         return $value;
     }
 
-    public function validateFeedUrl($url)
+    public function validateFeedUrl(string $url): bool
     {
         $url = trim($url);
-        return !empty($url) && filter_var($url, FILTER_VALIDATE_URL);
+
+        return '' !== $url && false !== filter_var($url, FILTER_VALIDATE_URL);
     }
 
-    public function setContent($content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function getEvent()
+    public function getEvent(): EmailSendEvent
     {
         return $this->event;
     }
