@@ -1,14 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MauticPlugin\MauticRssToEmailBundle\Feed;
 
-use SimplePie;
+use SimplePie\SimplePie;
 
 class Feed
 {
-    public static function fetch(string $url)
+    public static function fetch(string $url): SimplePie
     {
-        if (FeedCache::exists($url)) {
-            return FeedCache::get($url);
+        if (null !== $feed = FeedCache::get($url)) {
+            return $feed;
         }
 
         $feed = new SimplePie();
@@ -16,11 +19,9 @@ class Feed
         $feed->set_feed_url($url);
         $feed->enable_cache(false);
         $feed->init();
-        $feed->handle_content_type();
 
         FeedCache::push($url, $feed);
 
         return $feed;
     }
-
 }

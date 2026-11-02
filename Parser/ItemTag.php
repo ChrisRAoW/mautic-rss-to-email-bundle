@@ -1,24 +1,25 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MauticPlugin\MauticRssToEmailBundle\Parser;
 
 use MauticPlugin\MauticRssToEmailBundle\Traits\ParamsTrait;
+use SimplePie\Item;
 
 class ItemTag
 {
     use ParamsTrait;
 
-    public $tag;
-    public $feedItem;
-
-    public function __construct($tag, $params, $feedItem)
+    /**
+     * @param array<string, string> $params
+     */
+    public function __construct(public string $tag, array $params, public Item $feedItem)
     {
-        $this->tag = $tag;
         $this->setParams($params);
-
-        $this->feedItem = $feedItem;
     }
 
-    public function getValue()
+    public function getValue(): string
     {
         $feedItem = $this->feedItem;
 
@@ -38,10 +39,10 @@ class ItemTag
                 $value = $feedItem->get_content(true);
                 break;
             case 'content_text':
-                $value = strip_tags($feedItem->get_description());
+                $value = strip_tags((string) $feedItem->get_description());
                 break;
             case 'content_full_text':
-                $value = strip_tags($feedItem->get_content(true));
+                $value = strip_tags((string) $feedItem->get_content(true));
                 break;
             case 'description':
                 $value = $feedItem->get_description();
@@ -56,55 +57,45 @@ class ItemTag
                 break;
             case 'author':
                 $author = $feedItem->get_author();
-
-                if (!is_null($author)) {
-                    $value = $author->get_link();
-                }
-
-                $value = $feedItem->get_author()->get_name();
+                $value  = null !== $author ? $author->get_name() : '';
                 break;
             case 'categories':
-                $categories = $feedItem->get_categories();
+                $categories     = $feedItem->get_categories();
                 $categoriesList = [];
 
-                if (!empty($categories)) foreach ($categories as $category)
-                {
-                    $categoriesList[] = $category->get_label();
+                if (!empty($categories)) {
+                    foreach ($categories as $category) {
+                        $categoriesList[] = $category->get_label();
+                    }
                 }
 
                 $value = implode(', ', $categoriesList);
                 break;
             case 'image':
                 $enclosure = $feedItem->get_enclosure();
-                $value     = '';
-
-                if (!is_null($enclosure)) {
-                    $value = $enclosure->get_link();
-                }
+                $value     = null !== $enclosure ? $enclosure->get_link() : '';
                 break;
             case 'custom':
-                $key = null;
+                $key = $this->getParam('subTag') ?: $this->getParam('key');
 
-                if (!empty($this->getParam('subTag'))) {
-                    $key = $this->getParam('subTag');
-                } elseif (!empty($this->getParam('key'))) {
-                    $key = $this->getParam('key');
+                if (empty($key)) {
+                    $value = '';
+                    break;
                 }
 
                 $itemTag = $feedItem->get_item_tags('https://www.mautic.org/rss/mautic/', $key);
 
                 $value = $itemTag[0]['data'] ?? null;
-
                 break;
             default:
                 $itemTag = $feedItem->get_item_tags('', $this->tag);
-                
-                if(!empty($itemTag)) {
+
+                if (!empty($itemTag)) {
                     $value = $itemTag[0]['data'];
                 }
                 break;
         }
 
-        return $value;
+        return (string) $value;
     }
 }

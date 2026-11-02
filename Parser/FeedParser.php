@@ -1,19 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MauticPlugin\MauticRssToEmailBundle\Parser;
 
 use MauticPlugin\MauticRssToEmailBundle\Traits\ParamsTrait;
+use SimplePie\SimplePie;
 
 class FeedParser
 {
     use ParamsTrait;
 
-    public $feed;
-    protected $content;
+    protected string $content;
 
-    public function __construct($content, $feed)
+    public function __construct(string $content, public SimplePie $feed)
     {
-        $this->feed = $feed;
-
         $content = $this->parseInfo($content);
 
         $itemsParser = new ItemsParser($content, $this->feed);
@@ -22,39 +23,32 @@ class FeedParser
         $this->setContent($content);
     }
 
-    public function parseInfo($content)
+    public function parseInfo(string $content): string
     {
         preg_match_all('/{feedinfo:([^}]+)}/', $content, $tags);
 
         if (!empty($tags[1])) {
             foreach ($tags[1] as $tagIndex => $tag) {
-                $value = "Unknown ({$tag})";
+                $value = match ($tag) {
+                    'title'       => $this->feed->get_title(),
+                    'url'         => $this->feed->subscribe_url(),
+                    'description' => $this->feed->get_description(),
+                    default       => "Unknown ({$tag})",
+                };
 
-                switch ($tag) {
-                    case 'title':
-                        $value = $this->feed->get_title();
-                        break;
-                    case 'url':
-                        $value = $this->feed->feed_url;
-                        break;
-                    case 'description':
-                        $value = $this->feed->get_description();
-                        break;
-                }
-
-                $content = str_replace($tags[0][$tagIndex], $value, $content);
+                $content = str_replace($tags[0][$tagIndex], (string) $value, $content);
             }
         }
 
         return $content;
     }
 
-    public function setContent($content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }

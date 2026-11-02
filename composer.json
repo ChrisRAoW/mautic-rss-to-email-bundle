@@ -1,6 +1,8 @@
 {
     "name": "raow/mautic-rss-to-email-bundle",
+    "description": "Mautic plugin that renders RSS/Atom feed items inside e-mails",
     "type": "mautic-plugin",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Chris Schrijver",
@@ -8,6 +10,16 @@
         }
     ],
     "require": {
-        "simplepie/simplepie": "~1.5.0"
+        "php": ">=8.4",
+        "simplepie/simplepie": "^1.9"
+    },
+    "extra": {
+        "install-directory-name": "MauticRssToEmailBundle"
+    },
+    "config": {
+        "platform": {
+            "php": "8.4.0"
+        },
+        "platform-check": false
     }
 }
