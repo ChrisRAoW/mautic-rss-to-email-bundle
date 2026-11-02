@@ -1,6 +1,7 @@
 {
     "name": "raow/mautic-rss-to-email-bundle",
     "type": "mautic-plugin",
+    "version": "2.0.0",
     "authors": [
         {
             "name": "Chris Schrijver",
